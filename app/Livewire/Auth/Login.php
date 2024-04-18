@@ -5,21 +5,26 @@ namespace App\Livewire\Auth;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
+#[\Livewire\Attributes\Layout('components.layouts.login')]
 class Login extends Component
 {
-    public $email;
-    public $password;
+    // #[\Livewire\Attributes\Rule('required','email')]
+    public $email= '';
+    // #[\Livewire\Attributes\Rule('required','min:6')]
+    public $password= '';
     public function login(){
-        // $this->validate([
-        //     "email"=> "required|email",
-        //     "password"=> "required",
-        // ]);
-        if(Auth::attempt(['email'=>$this->email,'password'=>$this->password])){
-            return redirect('dashboard');
+        // Auth::attempt($this->only(properties:'email','password') Versi request laravel biasa
+        $validasi=$this->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+        if(Auth::attempt($validasi)){
+            return redirect()->route(route:'dashboard');   
         }
         else{
-            return redirect('login');
+            return redirect()->route('login')->with('error','Email/Password salah');
         }
+        dd('Hallo');
     }
     public function render()
     {
