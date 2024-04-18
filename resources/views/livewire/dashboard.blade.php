@@ -22,11 +22,11 @@
         <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Company</a>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        @if(!Auth::user())
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
-        @else
+        @auth
         <a href="/logout" class="text-sm font-semibold leading-6 text-gray-900">{{Auth::user()->name}} <span aria-hidden="true">&rarr;</span></a>
-        @endif
+        @else
+        <a href="/login" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+        @endauth
       </div>
     </nav>
     <!-- Mobile menu, show/hide based on menu open state. -->
